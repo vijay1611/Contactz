@@ -12,18 +12,23 @@ import android.util.Log
 import android.view.View
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
 import com.vijay.contactz.databinding.ActivityMainBinding
 import com.vijay.contactz.databinding.FragmentLocalContactsBinding
 import com.vijay.contactz.localDataFragment.Contact
+import com.vijay.contactz.localDataFragment.LocalContactsFragment
 import com.vijay.contactz.localDataFragment.Number
+import com.vijay.contactz.remoteDataFragment.RemoteContactsFragment
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : FragmentActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -33,12 +38,29 @@ class MainActivity : AppCompatActivity() {
         var CONTACTS_PERMISSION_REQUEST_CODE = 101
     }
     val key1="key1"
+    private var fragmentList = arrayListOf<Fragment>()
+    private var listStr = arrayListOf("Random", "Contacts")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val fragment1 = LocalContactsFragment()
+        fragment1.arguments = Bundle().apply {
+            //putString(Constant.ARG_OBJECT, "Random")
+        }
+        val fragment2 = RemoteContactsFragment()
+        fragment2.arguments = Bundle().apply {
+            //putString(Constant.ARG_OBJECT, "Contacts")
+        }
+        fragmentList.add(fragment1)
+        fragmentList.add(fragment2)
+        adapter = FragmentPageAdapter(this, fragmentList)
+        binding.viewPager.adapter = adapter
+        TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
+            tab.text = listStr[position]
+        }.attach()
 
-        adapter = FragmentPageAdapter(supportFragmentManager,lifecycle)
+       // adapter = FragmentPageAdapter()
 
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Phone"))
         binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Remote"))
@@ -164,7 +186,7 @@ class MainActivity : AppCompatActivity() {
         }.invokeOnCompletion {
             runOnUiThread{
                // binding.progress.visibility = View.GONE
-               // adapter.setData(contacts)
+                adapter.changeContacts()
             }
 
         }
