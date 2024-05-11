@@ -5,11 +5,12 @@ import android.content.Intent
 import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.vijay.contactz.databinding.ContactLlistItemBinding
 
 
-class ContactAdapter(private var context: Context,private var contacts:List<Contact>) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
+class ContactAdapter(private var contacts:List<Contact>) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
 
     fun filterContacts(query: String) {
         contacts = contacts.filter { contact ->
@@ -41,12 +42,12 @@ class ContactAdapter(private var context: Context,private var contacts:List<Cont
         holder.calloption.setOnClickListener {
             val intent = Intent(Intent.ACTION_CALL)
             intent.data = Uri.parse("tel:${contact.phoneNumbers[0]?.no.toString()}")
-            context.startActivity(intent)
+            holder.itemView.context.startActivity(intent)
         }
         holder.calloption.setOnLongClickListener {
             val intent = Intent(Intent.ACTION_DIAL)
             intent.data = Uri.parse("tel:${contact.phoneNumbers[0]?.no.toString()}")
-            context.startActivity(intent)
+            holder.itemView.context.startActivity(intent)
             true
         }
 

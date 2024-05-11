@@ -62,8 +62,8 @@ class MainActivity : FragmentActivity() {
 
        // adapter = FragmentPageAdapter()
 
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Phone"))
-        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Remote"))
+//        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Phone"))
+//        binding.tabLayout.addTab(binding.tabLayout.newTab().setText("Remote"))
 
         binding.viewPager.adapter = adapter
 
@@ -134,7 +134,7 @@ class MainActivity : FragmentActivity() {
         )
         CoroutineScope(Dispatchers.IO).launch {
 
-          //  binding.progress.visibility = View.VISIBLE
+            //  binding.progress.visibility = View.VISIBLE
 
             cursor?.use { cursor ->
 
@@ -160,10 +160,10 @@ class MainActivity : FragmentActivity() {
                                 phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER))
                             phoneNumbers.add(Number(phoneNumber))
                         }
-                        }
+                    }
 
                     phoneCursor?.close()
-                    if(displayName!=null && phoneNumbers!=null){
+                    if (displayName != null && phoneNumbers != null) {
                         val contact = Contact(displayName, phoneNumbers)
                         contacts.add(contact)
                     }
@@ -172,24 +172,24 @@ class MainActivity : FragmentActivity() {
                     // value2 = phoneNumbers[0]
 
 
-
                 }
 
             }
-            val sharedPreferences =applicationContext.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+            val sharedPreferences =
+                applicationContext.getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
             val editor = sharedPreferences.edit()
             editor.putString(key1, Gson().toJson(contacts))
             editor.apply()
             Log.e("cp*", Gson().toJson(contacts))
             cursor?.close()
-
-        }.invokeOnCompletion {
-            runOnUiThread{
-               // binding.progress.visibility = View.GONE
-                adapter.changeContacts()
-            }
-
         }
+//        }.invokeOnCompletion {
+//            runOnUiThread{
+//               // binding.progress.visibility = View.GONE
+              adapter.changeContacts()
+//            }
+//
+//        }
 
     }
 

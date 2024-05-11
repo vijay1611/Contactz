@@ -11,12 +11,15 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.vijay.contactz.databinding.FragmentLocalContactsBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 
 class LocalContactsFragment : Fragment() {
     private var _binding:FragmentLocalContactsBinding? = null
     private val binding get() = _binding!!
-    var adapter: ContactAdapter= ContactAdapter(requireContext(),listOf())
+    var adapter: ContactAdapter= ContactAdapter(listOf())
     val key1="key1"
 
     override fun onCreateView(
@@ -35,26 +38,30 @@ class LocalContactsFragment : Fragment() {
 
 
 
-
     }
 
     fun getAllContacts(){
-        val sharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
-        val value1 = sharedPreferences.getString(key1, null)
-        //val value2 = sharedPreferences.getString(key2, null)
-        // return Pair(value1, value2)
+        CoroutineScope(Dispatchers.Main).launch {
+            val sharedPreferences = requireContext().getSharedPreferences("MyPrefs", Context.MODE_PRIVATE)
+            val value1 = sharedPreferences.getString(key1, null)
+            //val value2 = sharedPreferences.getString(key2, null)
+            // return Pair(value1, value2)
 
-        Log.e("shared***", value1.toString())
-        val gson = Gson()
-        val itemType = object : TypeToken<List<Contact>>() {}.type
-        val data1:List<Contact> = if(value1!=null){
-            gson.fromJson(value1, itemType)
-        }else {
-            listOf<Contact>()
+            Log.e("shared***", value1.toString())
+            val gson = Gson()
+            val itemType = object : TypeToken<List<Contact>>() {}.type
+            val data1:List<Contact> = if(value1!=null){
+                gson.fromJson(value1, itemType)
+            }else {
+                listOf<Contact>()
+            }
+            adapter.setData(data1)
+        }.invokeOnCompletion {
+
+            binding.rvMain.layoutManager = LinearLayoutManager(requireContext())
+            binding.rvMain.adapter = adapter
         }
-        adapter.setData(data1)
-        binding.rvMain.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvMain.adapter = adapter
+
     }
 
 
