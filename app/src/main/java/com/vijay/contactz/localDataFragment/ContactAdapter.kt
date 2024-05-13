@@ -3,11 +3,14 @@ package com.vijay.contactz.localDataFragment
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.provider.ContactsContract.CommonDataKinds.Email
+import android.util.Patterns
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.vijay.contactz.databinding.ContactLlistItemBinding
+import java.util.regex.Pattern
 
 
 class ContactAdapter(private var contacts:List<Contact>) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
@@ -44,11 +47,11 @@ class ContactAdapter(private var contacts:List<Contact>) : RecyclerView.Adapter<
             intent.data = Uri.parse("tel:${contact.phoneNumbers[0]?.no.toString()}")
             holder.itemView.context.startActivity(intent)
         }
-        holder.calloption.setOnLongClickListener {
+        holder.fullLayout.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL)
             intent.data = Uri.parse("tel:${contact.phoneNumbers[0]?.no.toString()}")
             holder.itemView.context.startActivity(intent)
-            true
+
         }
 
 
@@ -58,6 +61,7 @@ class ContactAdapter(private var contacts:List<Contact>) : RecyclerView.Adapter<
         notifyDataSetChanged()
     }
 
+
     class ContactViewHolder(private val binding:ContactLlistItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(name: String, number: Any) {
             binding.name.text = name
@@ -65,7 +69,7 @@ class ContactAdapter(private var contacts:List<Contact>) : RecyclerView.Adapter<
         }
 
         var calloption = binding.callIcon
-
+        var fullLayout = binding.adapterLayout
 
 
 

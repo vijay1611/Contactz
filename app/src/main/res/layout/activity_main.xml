@@ -5,7 +5,38 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+
+   <LinearLayout
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       android:orientation="horizontal"
+       android:weightSum="1"
+       android:id="@+id/ll1"
+       tools:ignore="MissingConstraints">
+
+       <TextView
+           android:id="@+id/contactsTitle"
+           android:layout_width="match_parent"
+           android:layout_height="50dp"
+           android:layout_gravity="center"
+           android:layout_weight="0.8"
+           android:background="#3F51B5"
+           android:gravity="center"
+           android:text="Contactz"
+           android:textColor="#FFF"
+           android:textSize="24sp"
+           app:layout_constraintBottom_toTopOf="@+id/tabLayout"
+           app:layout_constraintEnd_toEndOf="parent"
+           app:layout_constraintStart_toStartOf="parent"
+           app:layout_constraintTop_toTopOf="parent" />
+       <androidx.appcompat.widget.SearchView
+           android:layout_width="wrap_content"
+           android:layout_height="wrap_content"
+           android:layout_weight="0.2"
+           android:id="@+id/search"/>
+   </LinearLayout>
     <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tabLayout"
         android:layout_width="0dp"
         android:layout_height="50dp"
         app:tabMode="fixed"
@@ -13,12 +44,10 @@
         app:tabIndicatorAnimationMode="linear"
         app:tabSelectedTextColor="@color/white"
         app:tabIndicatorColor="@null"
-        android:id="@+id/tabLayout"
         app:tabIndicator="@drawable/tab_indicator"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ll1" />
     <androidx.viewpager2.widget.ViewPager2
         android:layout_width="0dp"
         android:layout_height="0dp"

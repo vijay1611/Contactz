@@ -10,6 +10,7 @@ import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
+import androidx.appcompat.widget.SearchView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -33,13 +34,14 @@ class MainActivity : FragmentActivity() {
     private lateinit var binding: ActivityMainBinding
 
     private lateinit var adapter: FragmentPageAdapter
+    var contactData : List<Contact> = listOf()
 
     companion object {
         var CONTACTS_PERMISSION_REQUEST_CODE = 101
     }
     val key1="key1"
     private var fragmentList = arrayListOf<Fragment>()
-    private var listStr = arrayListOf("Random", "Contacts")
+    private var listStr = arrayListOf("Phone", "Remote")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -82,6 +84,23 @@ class MainActivity : FragmentActivity() {
 
             }
 
+        })
+        binding.search.setOnQueryTextListener(object : SearchView.OnQueryTextListener,
+            android.widget.SearchView.OnQueryTextListener {
+            override fun onQueryTextSubmit(query: String): Boolean {
+                return false
+            }
+
+            override fun onQueryTextChange(newText: String): Boolean {
+                if (newText.isEmpty()) {
+                    adapter.setLocalData(contactData)
+                } else {
+                    // Filter contacts based on the newText
+                    adapter.filterLocalData(newText)
+                    adapter.notifyDataSetChanged()
+                }
+                return true
+            }
         })
 
         binding.viewPager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback(){

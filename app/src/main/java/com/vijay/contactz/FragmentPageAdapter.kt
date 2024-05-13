@@ -11,6 +11,8 @@ import com.vijay.contactz.remoteDataFragment.RemoteContactsFragment
 
 class FragmentPageAdapter(fa: FragmentActivity, private var fragmentList:ArrayList<Fragment>
 ): FragmentStateAdapter(fa) {
+
+    var contacts:List<Contact> = listOf()
     override fun getItemCount(): Int {
         return fragmentList.size
     }
@@ -22,5 +24,20 @@ class FragmentPageAdapter(fa: FragmentActivity, private var fragmentList:ArrayLi
 
 fun changeContacts(){
     (fragmentList[0] as LocalContactsFragment).getAllContacts()
+
 }
+    fun setLocalData(contact: List<Contact>){
+        (fragmentList[0] as LocalContactsFragment).adapter.setData(contact)
+    }
+    fun filterLocalData(query:String){
+        fun filterContacts(query: String) {
+            contacts = contacts.filter { contact ->
+                contact.displayName!!.contains(query, ignoreCase = true) //||
+//                    contact.phoneNumbers?.get(0)?.no!!.contains(query)
+            }
+            notifyDataSetChanged()
+
+        }
+
+    }
 }
