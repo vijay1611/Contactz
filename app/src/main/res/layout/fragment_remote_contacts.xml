@@ -5,10 +5,49 @@
     android:layout_height="match_parent"
     tools:context=".remoteDataFragment.RemoteContactsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:orientation="vertical"
+        tools:context=".contentProvider.ContentProviderActivity">
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="wrap_content"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_gravity="center"-->
+        <!--            android:orientation="horizontal">-->
+        <!--            <EditText-->
+        <!--                android:id="@+id/searchContacts"-->
+        <!--                android:layout_width="300dp"-->
+        <!--                android:layout_height="wrap_content"-->
+        <!--                android:hint="Search"-->
+        <!--                android:padding="10dp"-->
+        <!--                android:layout_weight="0.8"-->
+        <!--                android:textSize="18sp"-->
+        <!--                android:background="@drawable/background_corner"-->
+        <!--                android:layout_gravity="center"-->
+        <!--                android:textColor="#3F51B5" />-->
+
+        <!--        </LinearLayout>-->
+        <!--        <Button-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="wrap_content"-->
+        <!--            android:layout_marginHorizontal="20dp"-->
+        <!--            android:text="Get Contacts"-->
+        <!--            android:id="@+id/btnSubmit"/>-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/rvMain"/>
+        <ProgressBar
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="center"
+            style="@style/CardView.Dark"
+            android:visibility="gone"
+            android:id="@+id/progress"/>
+
+    </LinearLayout>
 
 </FrameLayout>

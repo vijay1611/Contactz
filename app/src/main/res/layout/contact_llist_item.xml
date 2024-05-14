@@ -10,8 +10,17 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@+id/ll1"
+            android:paddingLeft="5dp"
+            android:layout_alignParentStart="true"/>
       <LinearLayout
-          android:layout_width="match_parent"
+          android:layout_width="230dp"
           android:layout_height="wrap_content"
           android:id="@+id/ll1"
           android:layout_toLeftOf="@+id/callIcon"
