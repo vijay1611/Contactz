@@ -2,14 +2,11 @@ package com.vijay.contactz
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.lifecycle.Lifecycle
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.vijay.contactz.localDataFragment.Contact
-import com.vijay.contactz.localDataFragment.LocalContactsFragment
-import com.vijay.contactz.remoteDataFragment.RemoteContactsFragment
+import com.vijay.contactz.ui.ContactFragment
 
-class FragmentPageAdapter(fa: FragmentActivity, private var fragmentList:ArrayList<Fragment>
+class FragmentPageAdapter(fa: FragmentActivity, private var fragmentList:ArrayList<ContactFragment>
 ): FragmentStateAdapter(fa) {
 
     var contacts:List<Contact> = listOf()
@@ -22,12 +19,9 @@ class FragmentPageAdapter(fa: FragmentActivity, private var fragmentList:ArrayLi
     }
 
 
-fun changeContacts(){
-    (fragmentList[0] as LocalContactsFragment).getAllContacts()
 
-}
     fun setLocalData(contact: List<Contact>){
-        (fragmentList[0] as LocalContactsFragment).adapter.setData(contact)
+        fragmentList[0].adapter.setData(contact)
     }
     fun filterLocalData(query:String){
         fun filterContacts(query: String) {

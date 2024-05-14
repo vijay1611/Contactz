@@ -2,18 +2,22 @@ package com.vijay.contactz.localDataFragment
 
 import android.content.Context
 import android.content.Intent
+import android.media.Image
 import android.net.Uri
 import android.provider.ContactsContract.CommonDataKinds.Email
 import android.util.Patterns
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.vijay.contactz.databinding.ContactLlistItemBinding
+import com.vijay.contactz.ui.ContactFragment
 import java.util.regex.Pattern
 
 
-class ContactAdapter(private var contacts:List<Contact>) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
+class ContactAdapter(private var contacts:List<Contact>,val profileListener: profileListener) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
 
     fun filterContacts(query: String) {
         contacts = contacts.filter { contact ->
@@ -37,11 +41,18 @@ class ContactAdapter(private var contacts:List<Contact>) : RecyclerView.Adapter<
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         val contact = contacts[position]
 
-        (if(contact.phoneNumbers!!.isNotEmpty()) contact.phoneNumbers[0] else "")?.let {
+        (if(contact.phoneNumbers!!.isNotEmpty()) contact.phoneNumbers[0]?.no else "")?.let {
             holder.bind(contact.displayName ?: "",
                 it
             )
         }
+
+
+        Glide.with(holder.image)
+            .load(contact.picture)
+            .centerCrop()
+            .into(holder.image)
+
         holder.calloption.setOnClickListener {
             val intent = Intent(Intent.ACTION_CALL)
             intent.data = Uri.parse("tel:${contact.phoneNumbers[0]?.no.toString()}")
@@ -52,6 +63,9 @@ class ContactAdapter(private var contacts:List<Contact>) : RecyclerView.Adapter<
             intent.data = Uri.parse("tel:${contact.phoneNumbers[0]?.no.toString()}")
             holder.itemView.context.startActivity(intent)
 
+        }
+        holder.itemView.setOnClickListener{
+            profileListener.profileClick(contact)
         }
 
 
@@ -66,12 +80,18 @@ class ContactAdapter(private var contacts:List<Contact>) : RecyclerView.Adapter<
         fun bind(name: String, number: Any) {
             binding.name.text = name
             binding.number.text = number.toString()
+
         }
 
         var calloption = binding.callIcon
         var fullLayout = binding.adapterLayout
+         var image =  binding.imageView
 
 
 
     }
+
+}
+interface profileListener{
+    fun profileClick(contact: Contact)
 }
