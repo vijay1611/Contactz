@@ -203,7 +203,7 @@ class ContactFragment : Fragment(),profileListener {
                     }
 
                     phoneCursor?.close()
-                    if (displayName != null && phoneNumbers != null && displaImage!=null) {
+                    if (displayName != null && phoneNumbers != null) {
                         val contact = Contact(displayName, phoneNumbers,displayName)
                         contacts.add(contact)
                     }

@@ -12,6 +12,9 @@ import android.view.ViewGroup
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.bumptech.glide.request.RequestOptions
+import com.vijay.contactz.R
 import com.vijay.contactz.databinding.ContactLlistItemBinding
 import com.vijay.contactz.ui.ContactFragment
 import java.util.regex.Pattern
@@ -47,11 +50,15 @@ class ContactAdapter(private var contacts:List<Contact>,val profileListener: pro
             )
         }
 
-
-        Glide.with(holder.image)
-            .load(contact.picture)
-            .centerCrop()
-            .into(holder.image)
+        val requestOptions = RequestOptions().transform(RoundedCorners(50))
+       if(contact.picture!=null){
+           Glide.with(holder.image)
+               .load(contact.picture)
+               .apply(requestOptions)
+               .into(holder.image)
+       }else{
+           holder.image.setImageResource(R.drawable.profile)
+       }
 
         holder.calloption.setOnClickListener {
             val intent = Intent(Intent.ACTION_CALL)

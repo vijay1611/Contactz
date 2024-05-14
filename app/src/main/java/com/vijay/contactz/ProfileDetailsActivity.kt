@@ -18,7 +18,7 @@ class ProfileDetailsActivity : AppCompatActivity() {
 
        val data:Contact?= intent.getParcelableExtra("contactData",Contact::class.java)
         Glide.with(binding.imagePd)
-            .load(data?.picture!!)
+            .load(data?.picture)
             .centerCrop()
             .into(binding.imagePd)
 
