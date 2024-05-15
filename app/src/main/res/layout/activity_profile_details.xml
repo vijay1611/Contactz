@@ -7,16 +7,34 @@
     android:background="@drawable/back_corner"
     tools:context=".ProfileDetailsActivity">
 
+    <TextView
+        android:id="@+id/titleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif"
+        android:text="Profile"
+        android:textColor="#FFF"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/image_pd"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.71" />
+
     <ImageView
         android:id="@+id/image_pd"
         android:layout_width="200dp"
         android:layout_height="200dp"
-        android:layout_marginBottom="400dp"
+        android:layout_marginBottom="300dp"
         android:background="@drawable/image_bg"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.502" />
 
     <EditText
         android:id="@+id/name_pd"
@@ -26,6 +44,7 @@
         android:layout_marginTop="48dp"
         android:background="@color/white"
         android:padding="10dp"
+        android:editable="false"
         android:textColor="#122380"
         android:textSize="20sp"
         android:fontFamily="sans-serif-smallcaps"
@@ -46,6 +65,53 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/name_pd" />
+    <EditText
+        android:id="@+id/mail_pd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_marginTop="48dp"
+        android:background="@color/white"
+        android:fontFamily="sans-serif-smallcaps"
+        android:padding="10dp"
+        android:textColor="#122380"
+        android:editable="false"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/number_pd" />
+
+    <Button
+        android:id="@+id/modify_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#009688"
+        android:text="Modify"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.297"
+        android:layout_marginRight="20dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mail_pd"
+        app:layout_constraintVertical_bias="0.166" />
+
+    <Button
+        android:id="@+id/cancel_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#009688"
+        android:text="Cancel"
+        android:layout_marginLeft="20dp"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.657"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mail_pd"
+        app:layout_constraintVertical_bias="0.169" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

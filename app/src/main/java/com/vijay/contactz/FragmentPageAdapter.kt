@@ -3,6 +3,7 @@ package com.vijay.contactz
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.vijay.contactz.database.ContactModel
 import com.vijay.contactz.localDataFragment.Contact
 import com.vijay.contactz.ui.ContactFragment
 
@@ -20,7 +21,7 @@ class FragmentPageAdapter(fa: FragmentActivity, private var fragmentList:ArrayLi
 
 
 
-    fun setLocalData(contact: List<Contact>){
+    fun setLocalData(contact: List<ContactModel>){
         fragmentList[0].adapter.setData(contact)
     }
     fun filterLocalData(query:String){

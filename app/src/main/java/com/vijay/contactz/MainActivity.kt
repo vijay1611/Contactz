@@ -16,6 +16,7 @@ import androidx.viewpager2.widget.ViewPager2
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.gson.Gson
+import com.vijay.contactz.database.ContactModel
 import com.vijay.contactz.databinding.ActivityMainBinding
 import com.vijay.contactz.localDataFragment.Contact
 import com.vijay.contactz.localDataFragment.Number
@@ -30,6 +31,7 @@ class MainActivity : FragmentActivity() {
 
     private lateinit var adapter: FragmentPageAdapter
     var contactData : List<Contact> = listOf()
+    var position = 0
 
     companion object {
         var CONTACTS_PERMISSION_REQUEST_CODE = 101
@@ -57,6 +59,7 @@ class MainActivity : FragmentActivity() {
         binding.viewPager.adapter = adapter
         TabLayoutMediator(binding.tabLayout, binding.viewPager) { tab, position ->
             tab.text = listStr[position]
+            this.position=position
         }.attach()
 
 
@@ -85,13 +88,14 @@ class MainActivity : FragmentActivity() {
             }
 
             override fun onQueryTextChange(newText: String): Boolean {
-                if (newText.isEmpty()) {
-                    adapter.setLocalData(contactData)
-                } else {
-                    // Filter contacts based on the newText
-                    adapter.filterLocalData(newText)
-                    adapter.notifyDataSetChanged()
-                }
+
+                    if (binding.viewPager.currentItem == 0) {
+                        fragment1.search(newText)
+                    } else {
+                        fragment2.search(newText)
+                    }
+
+
                 return true
             }
         })

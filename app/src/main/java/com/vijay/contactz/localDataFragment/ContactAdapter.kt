@@ -15,21 +15,22 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.vijay.contactz.R
+import com.vijay.contactz.database.ContactModel
 import com.vijay.contactz.databinding.ContactLlistItemBinding
 import com.vijay.contactz.ui.ContactFragment
 import java.util.regex.Pattern
 
 
-class ContactAdapter(private var contacts:List<Contact>,val profileListener: profileListener) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
+class ContactAdapter(private var contacts:List<ContactModel>,val profileListener: profileListener) : RecyclerView.Adapter<ContactAdapter.ContactViewHolder>() {
 
-    fun filterContacts(query: String) {
-        contacts = contacts.filter { contact ->
-            contact.displayName!!.contains(query, ignoreCase = true) //||
-//                    contact.phoneNumbers?.get(0)?.no!!.contains(query)
-        }
-        notifyDataSetChanged()
-        
-    }
+//    fun filterContacts(query: String) {
+//        contacts = contacts.filter { contact ->
+//            contact.displayName!!.contains(query, ignoreCase = true) //||
+////                    contact.phoneNumbers?.get(0)?.no!!.contains(query)
+//        }
+//        notifyDataSetChanged()
+//
+//    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContactViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -44,11 +45,13 @@ class ContactAdapter(private var contacts:List<Contact>,val profileListener: pro
     override fun onBindViewHolder(holder: ContactViewHolder, position: Int) {
         val contact = contacts[position]
 
-        (if(contact.phoneNumbers!!.isNotEmpty()) contact.phoneNumbers[0]?.no else "")?.let {
-            holder.bind(contact.displayName ?: "",
-                it
-            )
-        }
+//        (if(contact.phone!!.isNotEmpty()) contact.phone[0]?.no else "")?.let {
+//            holder.bind(contact.name ?: "",
+//                it
+//            )
+//        }
+       holder.name.text = contact.name
+       holder.number.text = contact.phone
 
         val requestOptions = RequestOptions().transform(RoundedCorners(50))
        if(contact.picture!=null){
@@ -57,17 +60,17 @@ class ContactAdapter(private var contacts:List<Contact>,val profileListener: pro
                .apply(requestOptions)
                .into(holder.image)
        }else{
-           holder.image.setImageResource(R.drawable.profile)
+           holder.image.setImageResource(R.drawable.profile_ic)
        }
 
         holder.calloption.setOnClickListener {
             val intent = Intent(Intent.ACTION_CALL)
-            intent.data = Uri.parse("tel:${contact.phoneNumbers[0]?.no.toString()}")
+            intent.data = Uri.parse("tel:${contact.phone}")
             holder.itemView.context.startActivity(intent)
         }
         holder.fullLayout.setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL)
-            intent.data = Uri.parse("tel:${contact.phoneNumbers[0]?.no.toString()}")
+            intent.data = Uri.parse("tel:${contact.phone}")
             holder.itemView.context.startActivity(intent)
 
         }
@@ -77,7 +80,7 @@ class ContactAdapter(private var contacts:List<Contact>,val profileListener: pro
 
 
     }
-    fun setData(contacts: List<Contact>){
+    fun setData(contacts: List<ContactModel>){
        this.contacts=contacts
         notifyDataSetChanged()
     }
@@ -85,10 +88,10 @@ class ContactAdapter(private var contacts:List<Contact>,val profileListener: pro
 
     class ContactViewHolder(private val binding:ContactLlistItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(name: String, number: Any) {
-            binding.name.text = name
-            binding.number.text = number.toString()
 
         }
+       var name =  binding.name
+       var number = binding.number
 
         var calloption = binding.callIcon
         var fullLayout = binding.adapterLayout
@@ -100,5 +103,5 @@ class ContactAdapter(private var contacts:List<Contact>,val profileListener: pro
 
 }
 interface profileListener{
-    fun profileClick(contact: Contact)
+    fun profileClick(contact: ContactModel)
 }

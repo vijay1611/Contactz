@@ -7,11 +7,12 @@ import java.io.Serializable
 data class Contact(
     val displayName: String?,
     val phoneNumbers: List<Number?>?,
-    val picture:String = ""
+    val picture:String? = ""
 ):Parcelable {
     constructor(parcel: Parcel) : this(
         parcel.readString(),
-        parcel.createTypedArrayList(Number.CREATOR)
+        parcel.createTypedArrayList(Number.CREATOR),
+        parcel.readString()
     ) {
     }
 
