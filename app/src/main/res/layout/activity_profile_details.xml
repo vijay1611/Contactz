@@ -72,7 +72,7 @@
         android:layout_margin="20dp"
         android:layout_marginTop="48dp"
         android:background="@color/white"
-        android:fontFamily="sans-serif-smallcaps"
+        android:textAllCaps="false"
         android:padding="10dp"
         android:textColor="#122380"
         android:editable="false"
